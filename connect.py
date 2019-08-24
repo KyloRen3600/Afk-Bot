@@ -1,17 +1,20 @@
 USERNAME = "Asquedril"
 LOGIN_COMMANDS = ["/login skylo", "/go"]
 SERVER = "ns3035424.ip-149-202-89.eu"
-#SERVER = "neocrash.tk"
+# SERVER = "neocrash.tk"
 PORT = 25565
 
 from minecraft.networking.connection import Connection
 from minecraft.networking.packets import Packet, clientbound, serverbound, PositionAndLookPacket
 import time
 
+import threading
+
 from log import log
 
 global minecraft_bots
 minecraft_bots = {}
+
 
 class MinecraftBot():
 	def __init__(self, username, server, port, commands):
@@ -21,31 +24,41 @@ class MinecraftBot():
 		self.commands = commands
 		self.bot = Connection(server, port, username=username, allowed_versions=[47])
 		self.bot.register_packet_listener(self.handle_join_game, clientbound.play.JoinGamePacket)
+
 		log("INFO", "Trying to connect {0} to {1}:{2}.".format(username, server, port))
 		self.bot.connect()
+		threading.Thread(target=self.execute_go, args=["/go"], daemon=True).start()
+
+	def execute_go(self, command):
+		time.sleep(15)
+		self.execute_command(command)
 
 	def handle_join_game(self, join_game_packet):
 		log("INFO", "{0} is connected to {1}:{2}.".format(self.username, self.server, self.port))
-		time.sleep(1)
-		for command in self.commands:
-			packet = serverbound.play.ChatPacket()
-			packet.message = command
-			self.bot.write_packet(packet)
-			time.sleep(10)
+		time.sleep(3)
+		self.execute_command("/login skylo")
+
+	def execute_command(self, command):
+		log("INFO", "{0} is doing command {1}".format(self.username, command))
+		packet = serverbound.play.ChatPacket()
+		packet.message = command
+		self.bot.write_packet(packet)
 
 	def disconnect(self):
 		log("INFO", "Disconnecting {0} from {1}:{2}.".format(self.username, self.server, self.port))
 		self.bot.disconnect()
 		log("INFO", "{0} is disconnected of {1}:{2}.".format(self.username, self.server, self.port))
 
+
 def minecraft_connect(username, server, port, commands):
 	global minecraft_bots
 	try:
 		minecraft_bots[username]
-
+		return False
 	except KeyError:
 		minecraft_bots[username] = MinecraftBot(username, server, port, commands)
-		return True
+	return True
+
 
 def minecraft_disconnect(username):
 	global minecraft_bots
@@ -57,8 +70,6 @@ def minecraft_disconnect(username):
 		return False
 
 
-
-#minecraft_connect("Asquedril", SERVER, PORT, LOGIN_COMMANDS)
-#time.sleep(10)
-#minecraft_disconnect("Asquedril")
-#minecraft_connect("test", SERVER, PORT, LOGIN_COMMANDS)
+# time.sleep(10)
+# minecraft_disconnect("Asquedril")
+# minecraft_connect("test", SERVER, PORT, LOGIN_COMMANDS)

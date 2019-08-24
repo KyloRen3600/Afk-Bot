@@ -7,10 +7,6 @@ with open("config.json") as f:
 	PORT = data["MINECRAFT_PORT"]
 	LOGIN_COMMANDS = data["MINECRAFT_LOGIN_COMMANDS"]
 
-
-
-
-import datetime
 import discord
 from discord.ext import commands
 
@@ -19,8 +15,6 @@ from connect import minecraft_connect, minecraft_disconnect
 
 prefix = PREFIX
 discord_bot = commands.Bot(command_prefix=prefix)
-
-
 
 
 def build_embed(user, title,color):

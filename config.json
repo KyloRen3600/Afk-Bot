@@ -1,9 +1,9 @@
 {
 
-  "DISCORD_TOKEN": "",
+  "DISCORD_TOKEN": "NjEzODUyNzU3MzU4NjczOTI2.XWBbHA.4cK-JoK5bfV4SGWRTMZK9dFR4JU",
   "DISCORD_PREFIX": "!",
   "MINECRAFT_SERVER": "ns3035424.ip-149-202-89.eu",
   "MINECRAFT_PORT": 25565,
-  "MINECRAFT_LOGIN_COMMANDS": ["/login mdp", "/go"]
+  "MINECRAFT_LOGIN_COMMANDS": ["/login <le mot de passe>", "/go"]
 
 }
