@@ -1,9 +1,3 @@
-USERNAME = "Asquedril"
-LOGIN_COMMANDS = ["/login skylo", "/go"]
-SERVER = "ns3035424.ip-149-202-89.eu"
-# SERVER = "neocrash.tk"
-PORT = 25565
-
 from minecraft.networking.connection import Connection
 from minecraft.networking.packets import Packet, clientbound, serverbound, PositionAndLookPacket
 import time
@@ -36,7 +30,7 @@ class MinecraftBot():
 	def handle_join_game(self, join_game_packet):
 		log("INFO", "{0} is connected to {1}:{2}.".format(self.username, self.server, self.port))
 		time.sleep(3)
-		self.execute_command("/login skylo")
+		self.execute_command(self.commands[0])
 
 	def execute_command(self, command):
 		log("INFO", "{0} is doing command {1}".format(self.username, command))

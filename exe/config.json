@@ -1,6 +1,6 @@
 {
 
-  "DISCORD_TOKEN": "<le token>",
+  "DISCORD_TOKEN": "le token",
   "DISCORD_PREFIX": "!",
   "MINECRAFT_SERVER": "ns3035424.ip-149-202-89.eu",
   "MINECRAFT_PORT": 25565,
